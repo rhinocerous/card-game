@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Card Game</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Below is the link to the jQuery library -->
+    <!-- This should always be before your script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/cards.js"></script>
+</head>
+<body class="no-select">
+    
+    <header>
+        <h1 class="main-header">Card Game</h1>
+       <button type="button" id="shuffle-button">Shuffle!</button>
+    </header>
+    
+    <div id="card-table"></div>
+
+    <script type="text/template" id="card-template">
+        <li class="">
+            <span class="card-value">value</span>
+            <span class="card-suit">suit</span>
+            <span class="card-suit-bottom">suit bottom</span>
+        </li>
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+@font-face {
+    font-family: 'CardFont';
+    src: url('../fonts/CARDC___.TTF') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+  }
+
+header{
+    text-align: center;
+}
+
+#card-table{
+    width:80vw;
+    height:600px;
+    background-color: darkgreen;
+    margin:0 auto;
+}
+
+ul#deck{
+    list-style: none;
+    padding-top:70px;
+}
+
+ul#deck li{
+    font-family: "CardFont";   
+    display: inline-block;
+    height:100px;
+    width:75px;
+    background-color: white;
+    margin:5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: relative;
+
+}
+
+ul#deck li .card-suit{
+    position: absolute;
+    left:0;
+    top:0;
+}
+
+
+ul#deck li .card-suit-bottom{
+    position: absolute;
+    right:0;
+    bottom:0;
+}
+
+ul#deck li .card-value{
+    font-size: 1.5em;
+    position: relative;
+    top: 35%;
+    left:35%;
+    transform: translateY(-50%)  translateX(-50%);
+    /* position: relative;
+    top:50%;
+    left:50%; */
+}
+
+.spades,
+.clubs{
+    color:black;
+}
+
+.diamonds,
+.hearts{
+    color:red;
+}
