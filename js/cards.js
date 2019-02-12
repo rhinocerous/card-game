@@ -99,18 +99,19 @@ function displayDeck(){
     var ul = $("<ul></ul>")
                 .attr("id","deck");
 
+    var template = $("#card-template").html();
+
+    console.log("LI template", template);
+
     deck.forEach(function(card, index){
             // console.log("card", index, card);
 
-             var li = $("<li></li>")
+             var li = $(template)
                         .addClass(card.suite.toLowerCase());
+                    
+            var suitSpan = $("span.card-suit", li);
+            var suitSpanBottom = $("span.card-suit-bottom", li);
 
-            var suitSpan = $("<span></span>")
-                            .addClass("card-suit");  
-                                
-            var suitSpanBottom = $("<span></span>")
-                            .addClass("card-suit-bottom"); 
-            
             switch(card.suite){
                 case "Diamonds":
                     suitSpan.text("[");
@@ -119,28 +120,23 @@ function displayDeck(){
 
                 case "Hearts":
                     suitSpan.text("{");
-                    suitSpanBottom.text("{");
+                    suitSpanBottom.text("{");                    
                     break;
                     
                 case "Spades":
                     suitSpan.text("}");
-                    suitSpanBottom.text("}");
+                    suitSpanBottom.text("}");                
+                    
                     break;
 
                 case "Clubs":                
                     suitSpan.text("]");
                     suitSpanBottom.text("]");
+                    
                     break;                                        
             }
-
-            var valSpan = $("<span></span>")
-                            .addClass("card-value")
-                            .text(card.value);
-
-            li.append(valSpan);   
-            li.append(suitSpan);   
-            li.append(suitSpanBottom);   
             
+            $("span.card-value", li).text(card.value);    
             ul.append(li);
     });
 
