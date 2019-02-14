@@ -4,10 +4,33 @@ var cardSuites = ['Spades', 'Clubs', 'Hearts', 'Diamonds'];
 var deck = [];
 
 $(document).ready(function(){
+    
+    $("#card-table").on("click", "ul#deck li", onCardClick);
+        
     createDeck();
+
+   // $("ul#deck li").on("click", onCardClick);
 
     $("#shuffle-button").on("click", onShuffleClick);
 });
+
+function onCardClick(){
+
+    var val = $(this).attr("data-card-value");
+    var suit = $(this).attr("data-card-suit");
+    var weight = $(this).attr("data-card-weight");
+
+    // console.log("CLICKED", this, $(this), val, suit, weight);
+
+    var card = $(this).data();
+
+    console.log("clicked", card);
+
+var p = $("<p></p>").text(card.value + " of " + card.suite);
+
+    $("div#selected-card").empty().append(p);
+
+}
 
 function onShuffleClick(){
     console.log("SHUFFLE CLICKED");
@@ -95,7 +118,8 @@ function createDeck(){
     displayDeck();
 }   
 
-function displayDeck(){
+function displayDeck()
+{
     var ul = $("<ul></ul>")
                 .attr("id","deck");
 
@@ -114,13 +138,13 @@ function displayDeck(){
 
             switch(card.suite){
                 case "Diamonds":
-                    suitSpan.text("[");
-                    suitSpanBottom.text("[");
+                    suitSpan.html("&diamondsuit;");
+                    suitSpanBottom.html("&diamondsuit;");
                     break;
 
                 case "Hearts":
-                    suitSpan.text("{");
-                    suitSpanBottom.text("{");                    
+                    suitSpan.html("&hearts;");
+                    suitSpanBottom.html("&hearts;");                    
                     break;
                     
                 case "Spades":
@@ -136,7 +160,15 @@ function displayDeck(){
                     break;                                        
             }
             
-            $("span.card-value", li).text(card.value);    
+            $("span.card-value", li)
+                    .text(card.value);    
+
+            li.attr("data-card-value", card.value)
+                .attr("data-card-suit", card.suite)
+                .attr("data-card-weight", card.weight);
+            
+            li.data(card);
+                
             ul.append(li);
     });
 
