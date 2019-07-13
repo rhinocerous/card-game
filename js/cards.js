@@ -1,33 +1,43 @@
-var cardValues = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+var cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 var cardSuites = ['Spades', 'Clubs', 'Hearts', 'Diamonds'];
 
 var deck = [];
 
-$(document).ready(function(){
+$(document).ready(function() {
+
+    $("#card-table").on("click", "ul#deck > li", onCardClicked)
+
     createDeck();
 
     $("#shuffle-button").on("click", onShuffleClick);
 });
 
-function onShuffleClick(){
+function onShuffleClick() {
     console.log("SHUFFLE CLICKED");
     shuffle();
 }
 
-function shuffle(){
+function onCardClicked() {
+
+    var card = $(this).data();
+
+    console.log("CLICKED", card);
+}
+
+function shuffle() {
 
     var copy = deck;
 
     deck = [];
 
-    while(copy.length){
-        
+    while (copy.length) {
+
         var randomIndex = getRandomInt(0, copy.length - 1);
 
         console.log("random index", randomIndex);
 
         deck.push(copy[randomIndex]);
-        
+
         var spliced = copy.splice(randomIndex, 1);
 
         console.log("spliced", spliced);
@@ -38,110 +48,80 @@ function shuffle(){
     displayDeck();
 }
 
-function createDeck(){
+function createDeck() {
     console.log("creating deck");
 
-    // var cardTemplate = $("#card-template").html();
-
     // console.log("my template", cardTemplate);
-    for(var outer = 0;outer < cardValues.length; outer++){
+    for (var outer = 0; outer < cardValues.length; outer++) {
         //  console.log("card value", cardValues[outer]);
 
-        for(var inner = 0; inner < cardSuites.length;inner++){
+        for (var inner = 0; inner < cardSuites.length; inner++) {
             //  console.log("card suite", cardSuites[inner]);
-            
+
             var card = {
                 suite: cardSuites[inner]
-            };            
+            };
             card.value = cardValues[outer];
             card.weight = outer;
 
-            //  var li = $("<li></li>")
-            //             .addClass(card.suite.toLowerCase());
-            
-            // if(card.suite == "Diamonds"){
-            //     li.text("[");
-            // } else if(card.suite == "Hearts"){
-            //     li.text("{");
-            // } else if(card.suite == "Spades"){
-            //     li.text("}");
-            // } else{
-            //     li.text("]");
-            // }
-            // var valSpan = $("<span></span>")
-            //                     .addClass("card-value")
-            //                     .text(card.value);
-
-            // li.append(valSpan);   
-            
-            // li.append(suitSpanBottom);
-           
-            // $(".card-suite", li).text(card.suite);
-            // $(".card-value", li).text(card.value);
-            // $(".card-weight", li).text(card.weight);
-
-            // card.element = li;
-
-            // ul.append(li);
-
             deck.push(card);
-        
         }
     }
 
-    // $("#card-table").append(ul);
-    // console.log("completed deck", deck);
+    console.log("completed deck", deck);
 
     displayDeck();
-}   
+}
 
-function displayDeck(){
+function displayDeck() {
     var ul = $("<ul></ul>")
-                .attr("id","deck");
+        .attr("id", "deck");
 
-    deck.forEach(function(card, index){
-            // console.log("card", index, card);
+    deck.forEach(function(card, index) {
+        // console.log("card", index, card);
 
-             var li = $("<li></li>")
-                        .addClass(card.suite.toLowerCase());
+        var li = $("<li></li>")
+            .addClass(card.suite.toLowerCase());
 
-            var suitSpan = $("<span></span>")
-                            .addClass("card-suit");  
-                                
-            var suitSpanBottom = $("<span></span>")
-                            .addClass("card-suit-bottom"); 
-            
-            switch(card.suite){
-                case "Diamonds":
-                    suitSpan.text("[");
-                    suitSpanBottom.text("[");
-                    break;
+        li.data(card);
 
-                case "Hearts":
-                    suitSpan.text("{");
-                    suitSpanBottom.text("{");
-                    break;
-                    
-                case "Spades":
-                    suitSpan.text("}");
-                    suitSpanBottom.text("}");
-                    break;
+        var suitSpan = $("<span></span>")
+            .addClass("card-suit");
 
-                case "Clubs":                
-                    suitSpan.text("]");
-                    suitSpanBottom.text("]");
-                    break;                                        
-            }
+        var suitSpanBottom = $("<span></span>")
+            .addClass("card-suit-bottom");
 
-            var valSpan = $("<span></span>")
-                            .addClass("card-value")
-                            .text(card.value);
+        switch (card.suite) {
+            case "Diamonds":
+                suitSpan.text("[");
+                suitSpanBottom.text("[");
+                break;
 
-            li.append(valSpan);   
-            li.append(suitSpan);   
-            li.append(suitSpanBottom);   
-            
-            ul.append(li);
+            case "Hearts":
+                suitSpan.text("{");
+                suitSpanBottom.text("{");
+                break;
+
+            case "Spades":
+                suitSpan.text("}");
+                suitSpanBottom.text("}");
+                break;
+
+            case "Clubs":
+                suitSpan.text("]");
+                suitSpanBottom.text("]");
+                break;
+        }
+
+        var valSpan = $("<span></span>")
+            .addClass("card-value")
+            .text(card.value);
+
+        li.append(valSpan);
+        li.append(suitSpan);
+        li.append(suitSpanBottom);
+
+        ul.append(li);
     });
 
     $("#card-table")
